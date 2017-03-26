@@ -47,12 +47,32 @@ for y in range(0, paddlen):
     for x in range(32, (32-((paddlen-y)*2)), -2):
         #print hex(int(databl2[(j-2):j],16))
         #print int(padd, 16)^ (int(padd,16)+1)
+        print "x", x
         databl2 = databl2[:x-2] + hex( int(databl2[(x-2):x],16) ^(int(padd, 16)^ (int(padd,16)+1)) )[2:].upper()  + databl2[x:]
         mdata = databl1 + databl2 + databl3
         #print data
     print "mm",mdata
+    for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
+        flag = False
+        for k in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
+            temp = (j + k).upper()
 
+            data = mdata[:32] + mdata[32:30+((16-paddlen-y)*2)] + temp + mdata[32+((16-paddlen-y)*2):]
+            #print data
+            ctext = [(int(data[i:i + 2], 16)) for i in range(0, len(data), 2)]
+            Oracle_Connect()
+            rc = Oracle_Send(ctext, 3)
+            Oracle_Disconnect()
+            if rc == 1:
+                print "find",rc, data
+                flag = True
+                break
+        if flag == True:
+            break
 
+    padd = hex((int(padd,16)+1))
+    #print "padd", padd
+    databl2 = data[32:64]
 '''
 
 for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f']:
