@@ -44,10 +44,10 @@ databl2 = odata[32:64]
 
 print odata
 for y in range(0, paddlen):
-    for x in range(32, (32-((paddlen-y)*2)), -2):
+    for x in range(32, (32-((paddlen+y)*2)), -2):
         #print hex(int(databl2[(j-2):j],16))
         #print int(padd, 16)^ (int(padd,16)+1)
-        print "x", x
+		#print "x", x
         databl2 = databl2[:x-2] + hex( int(databl2[(x-2):x],16) ^(int(padd, 16)^ (int(padd,16)+1)) )[2:].upper()  + databl2[x:]
         mdata = databl1 + databl2 + databl3
         #print data
