@@ -43,36 +43,64 @@ print paddlen, padd
 databl2 = odata[32:64]
 
 print odata
-for y in range(0, paddlen):
-    for x in range(32, (32-((paddlen+y)*2)), -2):
-        #print hex(int(databl2[(j-2):j],16))
+
+'''
+for y in range(0, 16-paddlen):
+	for x in range(32, (32-((paddlen+y)*2)), -2):
+		#print hex(int(databl2[(j-2):j],16))
         #print int(padd, 16)^ (int(padd,16)+1)
 		#print "x", x
-        databl2 = databl2[:x-2] + hex( int(databl2[(x-2):x],16) ^(int(padd, 16)^ (int(padd,16)+1)) )[2:].upper()  + databl2[x:]
-        mdata = databl1 + databl2 + databl3
-        #print data
-    print "mm",mdata
-    for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
-        flag = False
-        for k in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
-            temp = (j + k).upper()
+		databl2 = databl2[:x-2] + '{:02x}'.format(int(databl2[(x-2):x],16) ^(int(padd, 16)^ (int(padd,16)+1)) ).upper()  + databl2[x:]
+		mdata = databl1 + databl2 + databl3
+		#print data
+	print "y",y
+	print "mm", mdata
+	for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
+		flag = False
+		for k in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']:
+			temp = (j + k).upper()
 
-            data = mdata[:32] + mdata[32:30+((16-paddlen-y)*2)] + temp + mdata[32+((16-paddlen-y)*2):]
-            #print data
-            ctext = [(int(data[i:i + 2], 16)) for i in range(0, len(data), 2)]
-            Oracle_Connect()
-            rc = Oracle_Send(ctext, 3)
-            Oracle_Disconnect()
-            if rc == 1:
-                print "find",rc, data
-                flag = True
-                break
-        if flag == True:
-            break
+			data = mdata[:32] + mdata[32:30+((16-paddlen-y)*2)] + temp + mdata[32+((16-paddlen-y)*2):]
+			#print data
+			ctext = [(int(data[i:i + 2], 16)) for i in range(0, len(data), 2)]
+			Oracle_Connect()
+			rc = Oracle_Send(ctext, 3)
+			Oracle_Disconnect()
+			if rc == 1:
+				print "fi", data
+				flag = True
+				break
+		if flag == True:
+			break
 
-    padd = hex((int(padd,16)+1))
-    #print "padd", padd
-    databl2 = data[32:64]
+	print "opadd", padd
+	padd = hex((int(padd,16)+1))
+	print "mpadd", padd
+	databl2 = data[32:64]
+
+odatabl2 = odata[32:64]
+rdatabl2 = ""
+print "obl2", odata[32:64]
+print "mbl2", databl2
+for x in range(0, 16):
+	rdatabl2 += '{:02x}'.format(int(databl2[x:x+2], 16)^int(odatabl2[x:x+2], 16)^int(10, 16)).upper()
+print "msg2",rdatabl2
+'''
+
+
+
+data = "9F0B13944841A832B2421B9EAF6D9836D000F9F47DBED32F6167BD81B85696DBDF70E343C4000A2AE35874CE75E64C31"
+ctext = [(int(data[i:i+2],16)) for i in range(0, len(data), 2)]
+Oracle_Connect()
+rc = Oracle_Send(ctext, 3)
+Oracle_Disconnect()
+
+print "rc", rc
+
+
+
+
+
 '''
 
 for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f']:
@@ -95,7 +123,7 @@ for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', '
         break
 '''
 
-
+'''
 data = "9F0B13944841A832B2421B9EAF6D9836813EC9D961A2CF337D7BA19DA44A8AC7DF70E343C4000A2AE35874CE75E64C31"
 ctext = [(int(data[i:i+2],16)) for i in range(0, len(data), 2)]
 
@@ -104,23 +132,4 @@ Oracle_Connect()
 rc = Oracle_Send(ctext, 3)
 Oracle_Disconnect()
 print "rr", rc
-
-
-for j in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f']:
-    flag = False
-    for k in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f']:
-        temp = (j+k).upper()
-
-
-        data = mdata[:32]+mdata[32:38]+temp+mdata[40:]
-        print data
-        ctext = [(int(data[i:i+2],16)) for i in range(0, len(data), 2)]
-        Oracle_Connect()
-        rc = Oracle_Send(ctext, 3)
-        Oracle_Disconnect()
-        if rc == 1:
-            print rc,data
-            flag = True
-            break
-    if flag == True:
-        break
+'''
